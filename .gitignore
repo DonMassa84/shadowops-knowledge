@@ -1,0 +1,11 @@
+
+# --- Local Agent State Hub boundary ---
+.local/
+docs/agent/snapshots/
+hf-export/private/
+agent-state/
+*.local.env
+*.token
+*.kdbx
+*.p12
+*.pfx

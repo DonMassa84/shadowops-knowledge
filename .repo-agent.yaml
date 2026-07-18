@@ -1,0 +1,20 @@
+schema_version: 1
+repository:
+  id: DonMassa84/shadowops-knowledge
+  class: SANITIZED_KNOWLEDGE
+  lifecycle: active
+local_control:
+  control_plane: ProofFlow-Obsidian-Vault/Agent-State-Hub
+  status_domain: DokumentenSystem/11_STATUS_UND_STEUERUNG/knowledge
+  sync_mode: read_status_only
+github:
+  content_class: sanitized_source_and_docs
+  changes: pull_request_review
+hugging_face:
+  type: none
+  repo_id: null
+  sync: disabled
+privacy:
+  private_data: local_only
+  tracked_snapshots: forbidden
+  absolute_paths: forbidden
