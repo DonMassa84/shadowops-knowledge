@@ -42,5 +42,5 @@ Sicherheit laufender Jobs hat Vorrang vor Stromersparnis.
 
 ## Aktueller Zustand
 
-- Auto-Shutdown im DRY_RUN-Modus erst nach Beobachtungszeitraum produktiv schalten.
+- Auto-Shutdown produktiv aktiv (`DRY_RUN=0`); der Idle-Guard schützt laufende Workloads vor dem Herunterfahren.
 - 8 GiB Swap (Ryzen) bzw. 4 GiB Swap (i7) aktiv.
