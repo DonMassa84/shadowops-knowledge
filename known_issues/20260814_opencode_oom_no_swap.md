@@ -65,3 +65,33 @@ Das Problem ist deshalb nicht nur ein großer Prompt. Auch kleine neue OpenCode-
 ## Datenschutz
 
 Der rohe `ps`-Dump wurde bewusst nicht veröffentlicht, weil darin Autolearn-/Chat-Inhalte enthalten waren.
+
+## Recovery-Ergebnis 2026-08-14 23:23
+
+Die ursprüngliche Annahme, dass ein neuer 16-GiB-Swap angelegt werden müsse, wurde nach Prüfung präzisiert.
+
+Vorhanden war bereits:
+
+- `/swapfile`
+- Größe: 8 GiB
+- Typ: gültige Linux-Swap-Datei
+- Berechtigungen: `600`
+- Eigentümer: `root:root`
+- war zunächst nicht aktiviert
+- war zunächst nicht in `/etc/fstab` eingetragen
+
+Durchgeführt:
+
+- vorhandenen Swap mit `swapon /swapfile` aktiviert
+- `/swapfile none swap sw 0 0` in `/etc/fstab` eingetragen
+- `vm.swappiness=10` bestätigt
+
+Ergebnis:
+
+- 31 GiB physischer RAM
+- 8 GiB aktiver Swap
+- ca. 15 GiB RAM verfügbar
+- Swap aktiv und reboot-persistent
+- akutes OOM-Risiko deutlich reduziert
+
+Der vorhandene 8-GiB-Swap wird zunächst beibehalten. Eine Erweiterung auf 16 GiB ist aktuell nicht notwendig.
