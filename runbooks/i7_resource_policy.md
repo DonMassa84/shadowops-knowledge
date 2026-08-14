@@ -2,27 +2,45 @@
 
 ## Standard
 
-Der i7 wird bedarfsgesteuert betrieben. Sicherheit laufender Jobs hat Vorrang vor Stromersparnis.
+Der i7 wird standardmäßig AUS betrieben und nur bei Bedarf per Wake-on-LAN gestartet.
+Sicherheit laufender Jobs hat Vorrang vor Stromersparnis.
 
-## Vor Auto-Shutdown zu blockierende Workloads
+## Finale Betriebsregel
 
-- aktive SSH-Sitzungen
+- Standardzustand: AUS (stromlos).
+- Start: nur bei Bedarf per `i7-on` (Wake-on-LAN) vom Ryzen-Hauptrechner.
+- Nach 60 Minuten echter Inaktivität: automatisches sauberes Herunterfahren (systemctl poweroff).
+- Laufende Arbeit blockiert das Ausschalten.
+
+## Vor Auto-Shutdown blockierende Workloads (BUSY)
+
+- aktive SSH-Sitzungen (eingehend auf Port 22)
 - laufende libvirt/KVM-VMs
-- OpenCode
-- Ollama/Runner
+- OpenCode (`opencode`, `opencode run`)
 - Whisper/faster-whisper
 - ffmpeg
 - OCRmyPDF/Tesseract
-- rsync/rclone/scp/sftp
-- relevante Python-/Shell-Batchjobs
-- Backup-/Automation-Jobs
-- expliziter Keep-Awake-Lock
+- rsync / rclone / scp / sftp (echte Übertragungen)
+- apt/dpkg
+- git clone/fetch/pull/push
+- pytest/make/ninja
+- aktiver Ollama-Runner (Rechenlast)
+- System-Load über 2.0
+- expliziter Keep-Awake-Lock (`/run/i7-keepawake`)
 
-## Reihenfolge der Stabilisierung
+## Permanente Daemons (kein Keep-Alive-Grund)
 
-1. OOM-/Autolearn-Leak beheben.
-2. Swap aktivieren und prüfen.
-3. Parallelität kontrollieren.
-4. Kali-RAM für Normalbetrieb prüfen.
-5. Erst dann Auto-Shutdown zunächst im DRY-RUN testen.
-6. Produktives Poweroff erst nach fehlerfreiem Beobachtungszeitraum.
+- `ollama serve`
+- Open WebUI
+- Flowise
+- autossh-/SFTP-Tunnel (ausgehende Verbindungen)
+
+## Keep-Awake-Kommandos (auf dem i7)
+
+- `i7-keepawake` - Auto-Shutdown blockieren
+- `i7-auto` - Auto-Shutdown wieder freigeben
+
+## Aktueller Zustand
+
+- Auto-Shutdown im DRY_RUN-Modus erst nach Beobachtungszeitraum produktiv schalten.
+- 8 GiB Swap (Ryzen) bzw. 4 GiB Swap (i7) aktiv.
