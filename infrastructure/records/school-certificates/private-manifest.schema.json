@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private School Certificate Record",
+  "type": "object",
+  "required": ["record_id", "grade", "status", "private_path"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "grade": {"type": "integer", "minimum": 1, "maximum": 13},
+    "school_year": {"type": ["string", "null"]},
+    "document_type": {"type": "string"},
+    "status": {"enum": ["MISSING", "CANDIDATE", "VERIFIED", "ARCHIVED"]},
+    "private_path": {"type": "string"},
+    "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "source": {"type": ["string", "null"]},
+    "verified_at": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}

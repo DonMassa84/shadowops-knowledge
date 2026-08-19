@@ -1,0 +1,39 @@
+name: Records Privacy Guard
+
+on:
+  push:
+    paths:
+      - 'infrastructure/records/school-certificates/**'
+      - 'scripts/import-school-certificate.sh'
+      - '.github/workflows/records-privacy-guard.yml'
+  pull_request:
+    paths:
+      - 'infrastructure/records/school-certificates/**'
+      - 'scripts/import-school-certificate.sh'
+      - '.github/workflows/records-privacy-guard.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  no-private-records:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject certificate binaries in public infrastructure
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='infrastructure/records/school-certificates'
+          mapfile -t BAD < <(find "$ROOT" -type f \( \
+            -iname '*.pdf' -o -iname '*.jpg' -o -iname '*.jpeg' -o \
+            -iname '*.png' -o -iname '*.tif' -o -iname '*.tiff' \
+          \) -print)
+          if ((${#BAD[@]})); then
+            printf 'ERROR: private/binary certificate files found in public repo:\n'
+            printf ' - %s\n' "${BAD[@]}"
+            exit 1
+          fi
+          echo 'PASS: no certificate binaries committed.'
+      - name: Validate public manifest JSON
+        run: python -m json.tool infrastructure/records/school-certificates/manifest.public.json >/dev/null

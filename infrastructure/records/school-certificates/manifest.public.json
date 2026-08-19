@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "record_family": "school-certificates",
+  "privacy": "public-metadata-only",
+  "grades": [
+    {"grade": 1, "status": "MISSING"},
+    {"grade": 2, "status": "MISSING"},
+    {"grade": 3, "status": "MISSING"},
+    {"grade": 4, "status": "MISSING"},
+    {"grade": 5, "status": "MISSING"},
+    {"grade": 6, "status": "MISSING"},
+    {"grade": 7, "status": "MISSING"},
+    {"grade": 8, "status": "MISSING"},
+    {"grade": 9, "status": "MISSING"}
+  ]
+}

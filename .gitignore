@@ -1,0 +1,13 @@
+
+# ShadowOps private records guard
+/ShadowOpsVault/
+/private/
+/vault/
+/records-private/
+/infrastructure/records/school-certificates/private/
+infrastructure/records/school-certificates/**/*.pdf
+infrastructure/records/school-certificates/**/*.jpg
+infrastructure/records/school-certificates/**/*.jpeg
+infrastructure/records/school-certificates/**/*.png
+infrastructure/records/school-certificates/**/*.tif
+infrastructure/records/school-certificates/**/*.tiff
